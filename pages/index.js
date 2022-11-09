@@ -3,17 +3,20 @@ import styled from 'styled-components'
 import { CSSReset } from '../src/components/CSSReset'
 import Menu from '../src/components/Menu'
 import { StyledTimeline } from '../src/components/Timeline'
+import { useState } from 'react'
 
 function HomePage() {
+  const [valorDoFiltro, setValorDoFiltro] = useState("Angular");
+
   return (
     <>
       <CSSReset />
       <div>
-        <Menu />
+        <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
         <Header />
-        <Timeline playlists={config.playlists} />
+        <Timeline serchValue={valorDoFiltro} playlists={config.playlists} />
       </div>
-     
+
     </>
 
   )
@@ -55,7 +58,7 @@ function Header() {
   )
 }
 
-function Timeline(props) {
+function Timeline({ serchValue, ...props }) {
   const playlistNames = Object.keys(props.playlists)
 
   return (
@@ -66,7 +69,11 @@ function Timeline(props) {
           <section>
             <h2>{playlistName}</h2>
             <div>
-              {videos.map((video) => {
+              {videos.filter((video) => {
+                const titleNormalized = video.title.toLowerCase();
+                const serchValueNormalized = serchValue.toLowerCase();
+                return titleNormalized.includes(serchValueNormalized)
+              }).map((video) => {
                 return (
                   <a href={video.url}>
                     <img src={video.thumb} />
