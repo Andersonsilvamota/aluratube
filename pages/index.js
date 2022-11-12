@@ -1,16 +1,14 @@
 import config from '../config.json'
 import styled from 'styled-components'
-import { CSSReset } from '../src/components/CSSReset'
 import Menu from '../src/components/Menu'
 import { StyledTimeline } from '../src/components/Timeline'
 import { useState } from 'react'
 
 function HomePage() {
-  const [valorDoFiltro, setValorDoFiltro] = useState("Angular");
+  const [valorDoFiltro, setValorDoFiltro] = useState("");
 
   return (
     <>
-      <CSSReset />
       <div>
         <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
         <Header />
@@ -26,12 +24,15 @@ export default HomePage
 
 
 const StyledHeader = styled.div`
+  background-color: ${(theme) => theme.backgroundLevel1};
+
   img {
     width: 80ox;
     height: 80px;
     border-radius: 50%;
   }
   .user-profile {
+    margin-top: 50px;
     display: flex;
     align-items: center;
     width: 100%;
